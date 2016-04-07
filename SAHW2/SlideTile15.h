@@ -2,37 +2,49 @@
 // Created by mikeroit on 4/6/2016.
 //
 
-#ifndef SlideTile15_h
-#define SlideTile15_h
+#ifndef SLIDETILE15_H
+#define SLIDETILE15_H
 
 #include <stdio.h>
 #include <vector>
 #include <stdint.h>
 
-enum gridAction {
-    Up,
-    Right,
-    Down,
-    Left
+using namespace std;
 
+typedef uint64_t state;
+
+enum cardinal{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
 };
 
-struct coordinate {
-    int x, y;
-};
-
-bool operator==(const coordinate &c1, const coordinate &c2);
-
-class Grid {
+class SlideTile15 {
 public:
-    Grid(int w);
-    void GetActions(coordinate &nodeID, std::vector<gridAction> &actions);
-    void ApplyAction(coordinate &s, gridAction a);
-    void UndoAction(coordinate &s, gridAction a);
+
+
+    SlideTile15(){}
+    void GetActions(state &s, std::vector<uint8_t> &actions);
+    //void ApplyAction(coordinate &s, gridAction a);
+    //void UndoAction(coordinate &s, gridAction a);
 private:
     const size_t WIDTH = 4;
+    const size_t HEIGHT = 4;
 
+    bool canMove(int ti, cardinal direction) {
+        switch (direction) {
+            case NORTH:
+                return (ti - 4 >= 0);
+            case SOUTH:
+                return (ti + 4 < 16);
+            case EAST:
+                return ( (ti / WIDTH) == ((ti - 1) / WIDTH) );
+            case WEST:
+                return ( (ti / WIDTH) == ((ti + 1) / WIDTH) );
+        }
+    }
 };
 
 
-#endif /* Grid_h */
+#endif /* SlideTile15_h */

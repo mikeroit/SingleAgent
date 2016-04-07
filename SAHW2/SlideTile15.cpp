@@ -2,44 +2,56 @@
 //  created by mikeroit on 4/6/2016.
 //Grid.cpp
 //
-
-#include "Grid.h"
+#include <vector>
+#include "SlideTile15.h"
 #include <cassert>
 
-bool operator==(const coordinate &c1, const coordinate &c2)
-{
-    return c1.x == c2.x && c1.y == c2.y;
-}
+using namespace std;
+
+void SlideTile15::GetActions(state &s, std::vector<uint8_t> &actions) {
+    //max number of actions: 4
+    actions.resize(0);
 
 
-Grid::Grid(int w)
-        :width(w) {}
+    //find the blank tile (0-tile) and save index
+    int blankIndex = 0;
+    for(blankIndex; blankIndex < WIDTH * HEIGHT; blankIndex++){
+        if(((s >> (60 - (blankIndex * 4))) & 0x0f) == 0){
+            break;
+        }
 
-void Grid::GetActions(coordinate &nodeID, std::vector<gridAction> &actions)
-{
-    actions.clear();
-    if (nodeID.x < width)
-        actions.push_back(kRight);
-    if (nodeID.y < width)
-        actions.push_back(kUp);
-}
-
-void Grid::ApplyAction(coordinate &s, gridAction a)
-{
-    switch (a)
-    {
-        case kRight: s.x++; break;
-        case kUp: s.y++; break;
-        default: assert(false);
     }
+
+    //check legal moves
+    if(canMove(blankIndex, NORTH)) {
+        printf("NORTH\n");
+        actions.push_back(
+                (uint8_t) ((blankIndex << 4) | (blankIndex - 4))
+        );
+    }
+
+    if(canMove(blankIndex, SOUTH)){
+        printf("SOUTH\n");
+        actions.push_back(
+                (uint8_t) ((blankIndex << 4) | (blankIndex + 4))
+        );
+    }
+
+    if(canMove(blankIndex, EAST)){
+        printf("EAST\n");
+        actions.push_back(
+                (uint8_t) ((blankIndex << 4) | (blankIndex - 1))
+        );
+    }
+
+    if(canMove(blankIndex, WEST)){
+        printf("WEST\n");
+        actions.push_back(
+                (uint8_t) ((blankIndex << 4) | (blankIndex + 1))
+        );
+    }
+
+
 }
 
-void Grid::UndoAction(coordinate &s, gridAction a)
-{
-    switch (a)
-    {
-        case kRight: s.x--; break;
-        case kUp: s.y--; break;
-        default: assert(false);
-    }
-}
+
