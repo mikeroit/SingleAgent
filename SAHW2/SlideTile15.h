@@ -26,8 +26,8 @@ public:
 
     SlideTile15(){}
     void GetActions(state &s, std::vector<uint8_t> &actions);
-    //void ApplyAction(coordinate &s, gridAction a);
-    //void UndoAction(coordinate &s, gridAction a);
+    void ApplyAction(state &s, uint8_t a);
+    void UndoAction(state &s, uint8_t a);
 private:
     const size_t WIDTH = 4;
     const size_t HEIGHT = 4;

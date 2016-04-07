@@ -1,21 +1,24 @@
 #include <iostream>
 #include "SlideTile15.h"
 #include <vector>
+#include "BFS.h"
 
 using namespace std;
 
 int main() {
 
-    uint64_t board = 0x1011111111111111;
-    SlideTile15 *st = new SlideTile15();
-    std::vector<uint8_t> list;
-    list.clear();
+    uint64_t board = 0x4123856790ABCDEF;
+    uint64_t goal = 0x0123456789ABCDEF;
 
-    st->GetActions(board, list);
 
-    for(int i = 0; i < list.size(); i++){
-        cout << (int) list.at(i) << endl;
-    }
+    SlideTile15 st;
+    BFS<uint64_t , uint8_t, SlideTile15> myBFS;
+    if (myBFS.GetPath(st, board, goal))
+        std::cout << "Goal found!\n";
+    else
+        std::cout << "Goal not found!\n";
+    std::cout << myBFS.GetNodesExpanded() << " total nodes expanded\n";
+
 
     return 0;
 }
