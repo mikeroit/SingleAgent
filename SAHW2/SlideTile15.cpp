@@ -24,28 +24,28 @@ void SlideTile15::GetActions(state &s, std::vector<uint8_t> &actions) {
 
     //check legal moves
     if(canMove(blankIndex, NORTH)) {
-        //printf("NORTH\n");
+        printf("%d\n", ((blankIndex << 4) | (blankIndex - 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 4))
         );
     }
 
     if(canMove(blankIndex, SOUTH)){
-        //printf("SOUTH\n");
+        printf("%d\n", ((blankIndex << 4) | (blankIndex + 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 4))
         );
     }
 
     if(canMove(blankIndex, EAST)){
-        //printf("EAST\n");
+        printf("%d\n", ((blankIndex << 4) | (blankIndex - 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 1))
         );
     }
 
     if(canMove(blankIndex, WEST)){
-        //printf("WEST\n");
+        printf("%d\n", ((blankIndex << 4) | (blankIndex + 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 1))
         );
@@ -62,8 +62,8 @@ void SlideTile15::ApplyAction(state &s, uint8_t a) {
     //fetch value at those locations
     uint64_t fetchMask = 0xf000000000000000;
 
-    uint8_t first = (((fetchMask >> startLoc) & s) >> (60 - (startLoc * 4)));
-    uint8_t second = (((fetchMask >> endLoc) & s) >> (60 - (endLoc * 4)));
+    uint8_t first = (((fetchMask >> (startLoc * 4) & s) >> (60 - (startLoc * 4))));
+    uint8_t second = (((fetchMask >> (endLoc) * 4) & s) >> (60 - (endLoc * 4)));
 
     printf("%d, %d", startLoc, endLoc);
 
