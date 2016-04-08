@@ -75,6 +75,8 @@ void SlideTile15::ApplyAction(state &s, uint8_t a) {
 
     uint64_t insertMask = 0xf000000000000000;
     s = (s & (!(insertMask >> startLoc))) | (second << (60 - startLoc));
+
+    printf("%d\n", s);
     s = (s & (!(insertMask >> endLoc))) | (first << (60 - endLoc));
 
 }
