@@ -58,6 +58,7 @@ void SlideTile15::ApplyAction(state &s, uint8_t a) {
 
     //fetch starting and ending locations
     int startLoc = ((a >> 4) & 0x0f); int endLoc = (a & 0x0f);
+    startLoc = 60 - (startLoc * 4); endLoc = 60 - (endLoc * 4);
 
     //fetch value at those locations
     uint64_t fetchMask = 0xf000000000000000;
@@ -72,12 +73,8 @@ void SlideTile15::ApplyAction(state &s, uint8_t a) {
     }
 
     //swap values
-
-    uint64_t insertMask = 0xf000000000000000;
-    s = (s & (!(insertMask >> startLoc))) | (second << (60 - startLoc));
-
-    printf("%d\n", s);
-    s = (s & (!(insertMask >> endLoc))) | (first << (60 - endLoc));
+    unsigned int x =  ((s >> startLoc) ^ (s >> endLoc)) & ((1U << 4) - 1);
+    s = s ^ ((x << startLoc) | (x << endLoc));
 
 }
 
@@ -95,10 +92,8 @@ void SlideTile15::UndoAction(state &s, uint8_t a){
     }
 
     //swap values
-
-    uint64_t insertMask = 0xf000000000000000;
-    s = (s & (!(insertMask >> startLoc))) | (second << (60 - startLoc));
-    s = (s & (!(insertMask >> endLoc))) | (first << (60 - endLoc));
+    unsigned int x =  ((s >> startLoc) ^ (s >> endLoc)) & ((1U << 4) - 1);
+    s = s ^ ((x << startLoc) | (x << endLoc));
 }
 
 
