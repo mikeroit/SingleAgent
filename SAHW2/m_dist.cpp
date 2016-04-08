@@ -18,10 +18,12 @@ using namespace std;
              int index = (y * 4) + x;
              int value = ((board >> (60 - (index * 4))) & 0x0f);
 
-             int valueX = value % 4;
-             int valueY = value / 4;
+             if (! (value == 0)) {
+                 int valueX = value % 4;
+                 int valueY = value / 4;
 
-             returnVal += (abs(x - valueX) + (abs(y - valueY)));
+                 returnVal += (abs(x - valueX) + (abs(y - valueY)));
+             }
 
          }
      }
