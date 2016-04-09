@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void SlideTile15::GetActions(state &s, std::vector<uint8_t> &actions) {
+void SlideTile15::GetActions(state &s, std::vector<action> &actions) {
     //max number of actions: 4
     actions.resize(0);
 
@@ -69,7 +69,7 @@ uint64_t swapBits(uint64_t x, uint64_t p1, uint64_t p2, uint64_t n)
     return result;
 }
 
-void SlideTile15::ApplyAction(uint64_t &s, uint8_t a) {
+void SlideTile15::ApplyAction(uint64_t &s, action a) {
     //fetch starting and ending locations
     int startLoc = ((a >> 4) & 0x0f); int endLoc = (a & 0x0f);
     startLoc = 60 - (startLoc * 4); endLoc = 60 - (endLoc * 4);
@@ -79,7 +79,7 @@ void SlideTile15::ApplyAction(uint64_t &s, uint8_t a) {
 
 }
 
-void SlideTile15::UndoAction(state &s, uint8_t a){
+void SlideTile15::UndoAction(state &s, action a){
 	ApplyAction(s, a);
 
 }

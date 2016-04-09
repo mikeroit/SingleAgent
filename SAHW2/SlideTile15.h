@@ -12,6 +12,7 @@
 using namespace std;
 
 typedef uint64_t state;
+typedef uint8_t action;
 
 enum cardinal{
     NORTH,
@@ -25,9 +26,9 @@ public:
 
 
     SlideTile15(){}
-    void GetActions(state &s, std::vector<uint8_t> &actions);
-    void ApplyAction(state &s, uint8_t a);
-    void UndoAction(state &s, uint8_t a);
+    void GetActions(state &s, std::vector<action> &actions);
+    void ApplyAction(state &s, action a);
+    void UndoAction(state &s, action a);
 private:
     const size_t WIDTH = 4;
     const size_t HEIGHT = 4;
