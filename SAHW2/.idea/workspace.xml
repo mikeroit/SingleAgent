@@ -54,8 +54,8 @@
       <file leaf-file-name="BFS.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BFS.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+            <state relative-caret-position="495">
+              <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -64,8 +64,8 @@
       <file leaf-file-name="SlideTile15.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SlideTile15.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1561">
-              <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+            <state relative-caret-position="-132">
+              <caret line="44" column="104" selection-start-line="44" selection-start-column="104" selection-end-line="44" selection-end-column="104" />
               <folding>
                 <element signature="e#54#71#0" expanded="true" />
               </folding>
@@ -116,10 +116,10 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/m_dist.h" />
         <option value="$PROJECT_DIR$/m_dist.cpp" />
-        <option value="$PROJECT_DIR$/BFS.h" />
         <option value="$PROJECT_DIR$/main.cpp" />
-        <option value="$PROJECT_DIR$/SlideTile15.cpp" />
         <option value="$PROJECT_DIR$/SlideTile15.h" />
+        <option value="$PROJECT_DIR$/BFS.h" />
+        <option value="$PROJECT_DIR$/SlideTile15.cpp" />
       </list>
     </option>
   </component>
@@ -164,6 +164,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
   </component>
   <component name="RunManager" selected="Application.Build All">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SAHW2" TARGET_NAME="SAHW2" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
@@ -694,6 +695,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SlideTile15.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-49">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
@@ -704,24 +713,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BFS.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SlideTile15.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-49">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state relative-caret-position="495">
+          <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SlideTile15.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1561">
-          <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+        <state relative-caret-position="-132">
+          <caret line="44" column="104" selection-start-line="44" selection-start-column="104" selection-end-line="44" selection-end-column="104" />
           <folding>
             <element signature="e#54#71#0" expanded="true" />
           </folding>

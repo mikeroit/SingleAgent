@@ -49,7 +49,7 @@ bool BFS<state, action, environment>::GetPath(environment &e, state &start, stat
         nodesExpanded++;
         for (auto a : moves)
         {
-            printf("%X",a);
+            printf("%X\n",a);
             e.ApplyAction(next, a);
             q.push_back(next);
             e.UndoAction(next, a);

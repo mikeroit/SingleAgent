@@ -28,28 +28,28 @@ void SlideTile15::GetActions(state &s, std::vector<action> &actions) {
     }
 
     //check legal moves
-    if(canMove(blankIndex, NORTH) && ((((blankIndex << 4) | (blankIndex - 4))) != s.previousMove)) {
+    if(canMove(blankIndex, NORTH) && ((((blankIndex) | ((blankIndex - 4) << 4)) != s.previousMove))) {
         //printf("%d\n", ((blankIndex << 4) | (blankIndex - 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 4))
         );
     }
 
-    if(canMove(blankIndex, SOUTH)  && ((((blankIndex << 4) | (blankIndex + 4))) != s.previousMove)){
+    if(canMove(blankIndex, SOUTH)  && ((((blankIndex) | ((blankIndex + 4) << 4)) != s.previousMove))){
         //printf("%d\n", ((blankIndex << 4) | (blankIndex + 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 4))
         );
     }
 
-    if(canMove(blankIndex, EAST) && ((((blankIndex << 4) | (blankIndex - 1))) != s.previousMove)){
+    if(canMove(blankIndex, EAST) && ((((blankIndex << 4) | ((blankIndex - 1) << 4)) != s.previousMove))){
         //printf("%d\n", ((blankIndex << 4) | (blankIndex - 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 1))
         );
     }
 
-    if(canMove(blankIndex, WEST) && ((((blankIndex << 4) | (blankIndex + 1))) != s.previousMove)){
+    if(canMove(blankIndex, WEST) && ((((blankIndex) | ((blankIndex + 1) << 4))) != s.previousMove)){
         //printf("%d\n", ((blankIndex << 4) | (blankIndex + 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 1))
