@@ -79,21 +79,8 @@ void SlideTile15::ApplyAction(uint64_t &s, uint8_t a) {
 }
 
 void SlideTile15::UndoAction(state &s, uint8_t a){
-    //fetch starting and ending locations
-    int startLoc = ((a >> 4) & 0x0f); int endLoc = (a & 0x0f);
+	ApplyAction(s, a)    
 
-    //fetch value at those locations
-    uint64_t fetchMask = 0xf000000000000000;
-
-    uint8_t first = (((fetchMask >> startLoc) & s) >> (60 - (startLoc * 4)));
-    uint8_t second = (((fetchMask >> endLoc) & s) >> (60 - (endLoc * 4)));
-    if(! (first == 0 || second == 0)){
-        printf("Can only swap with the blank tile (tile #0)");
-    }
-
-    //swap values
-    unsigned int x =  ((s >> startLoc) ^ (s >> endLoc)) & ((1U << 4) - 1);
-    s = s ^ ((x << startLoc) | (x << endLoc));
 }
 
 
