@@ -10,7 +10,7 @@ int main() {
 
 
 
-    uint64_t board = 0x7123456089ABCDFE;
+    uint64_t board = 0x1023456789abcdef;
     uint64_t goal = 0x0123456789ABCDEF;
 
     SlideTile15 st;

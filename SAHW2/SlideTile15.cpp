@@ -5,6 +5,7 @@
 #include <vector>
 #include "SlideTile15.h"
 #include <cassert>
+#include <stdint.h>
 
 using namespace std;
 
@@ -24,28 +25,28 @@ void SlideTile15::GetActions(state &s, std::vector<uint8_t> &actions) {
 
     //check legal moves
     if(canMove(blankIndex, NORTH)) {
-        printf("%d\n", ((blankIndex << 4) | (blankIndex - 4)));
+        //printf("%d\n", ((blankIndex << 4) | (blankIndex - 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 4))
         );
     }
 
     if(canMove(blankIndex, SOUTH)){
-        printf("%d\n", ((blankIndex << 4) | (blankIndex + 4)));
+        //printf("%d\n", ((blankIndex << 4) | (blankIndex + 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 4))
         );
     }
 
     if(canMove(blankIndex, EAST)){
-        printf("%d\n", ((blankIndex << 4) | (blankIndex - 1)));
+        //printf("%d\n", ((blankIndex << 4) | (blankIndex - 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 1))
         );
     }
 
     if(canMove(blankIndex, WEST)){
-        printf("%d\n", ((blankIndex << 4) | (blankIndex + 1)));
+        //printf("%d\n", ((blankIndex << 4) | (blankIndex + 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 1))
         );
@@ -79,7 +80,7 @@ void SlideTile15::ApplyAction(uint64_t &s, uint8_t a) {
 }
 
 void SlideTile15::UndoAction(state &s, uint8_t a){
-	ApplyAction(s, a)    
+	ApplyAction(s, a);
 
 }
 
