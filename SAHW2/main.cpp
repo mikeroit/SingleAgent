@@ -10,11 +10,13 @@ int main() {
 
 
 
-    uint64_t board = 0x1023456789abcdef;
-    uint64_t goal = 0x0123456789ABCDEF;
+    state board;
+    board.myState = 0x1023456789abcdef;
+    state goal;
+    goal.myState = 0x0123456789ABCDEF;
 
     SlideTile15 st;
-    BFS<uint64_t , uint8_t, SlideTile15> myBFS;
+    BFS<state , action, SlideTile15> myBFS;
     if (myBFS.GetPath(st, board, goal))
         std::cout << "Goal found!\n";
     else

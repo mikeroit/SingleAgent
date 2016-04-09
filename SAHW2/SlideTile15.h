@@ -11,8 +11,13 @@
 
 using namespace std;
 
-typedef uint64_t state;
+struct state{
+    uint64_t myState;
+    uint8_t previousMove;
+};
 typedef uint8_t action;
+
+bool operator==(const state &s1, const state &s2);
 
 enum cardinal{
     NORTH,

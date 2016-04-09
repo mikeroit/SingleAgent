@@ -9,6 +9,10 @@
 
 using namespace std;
 
+bool operator==(const state &s1, const state &s2){
+    return s1.myState == s2.myState;
+}
+
 void SlideTile15::GetActions(state &s, std::vector<action> &actions) {
     //max number of actions: 4
     actions.resize(0);
@@ -17,35 +21,35 @@ void SlideTile15::GetActions(state &s, std::vector<action> &actions) {
     //find the blank tile (0-tile) and save index
     int blankIndex = 0;
     for(blankIndex; blankIndex < WIDTH * HEIGHT; blankIndex++){
-        if(((s >> (60 - (blankIndex * 4))) & 0x0f) == 0){
+        if(((s.myState >> (60 - (blankIndex * 4))) & 0x0f) == 0){
             break;
         }
 
     }
 
     //check legal moves
-    if(canMove(blankIndex, NORTH)) {
+    if(canMove(blankIndex, NORTH) && ((((blankIndex << 4) | (blankIndex - 4))) != s.previousMove)) {
         //printf("%d\n", ((blankIndex << 4) | (blankIndex - 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 4))
         );
     }
 
-    if(canMove(blankIndex, SOUTH)){
+    if(canMove(blankIndex, SOUTH)  && ((((blankIndex << 4) | (blankIndex + 4))) != s.previousMove)){
         //printf("%d\n", ((blankIndex << 4) | (blankIndex + 4)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 4))
         );
     }
 
-    if(canMove(blankIndex, EAST)){
+    if(canMove(blankIndex, EAST) && ((((blankIndex << 4) | (blankIndex - 1))) != s.previousMove)){
         //printf("%d\n", ((blankIndex << 4) | (blankIndex - 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex - 1))
         );
     }
 
-    if(canMove(blankIndex, WEST)){
+    if(canMove(blankIndex, WEST) && ((((blankIndex << 4) | (blankIndex + 1))) != s.previousMove)){
         //printf("%d\n", ((blankIndex << 4) | (blankIndex + 1)));
         actions.push_back(
                 (uint8_t) ((blankIndex << 4) | (blankIndex + 1))
@@ -69,13 +73,14 @@ uint64_t swapBits(uint64_t x, uint64_t p1, uint64_t p2, uint64_t n)
     return result;
 }
 
-void SlideTile15::ApplyAction(uint64_t &s, action a) {
+void SlideTile15::ApplyAction(state &s, action a) {
+    s.previousMove = a;
     //fetch starting and ending locations
     int startLoc = ((a >> 4) & 0x0f); int endLoc = (a & 0x0f);
     startLoc = 60 - (startLoc * 4); endLoc = 60 - (endLoc * 4);
     //swap values
-    unsigned int x =  ((((s >> startLoc) & ((1U << 4) - 1)) ^ ((s >> endLoc) & ((1U << 4) - 1))));
-    s = swapBits(s, startLoc, endLoc, 4);
+    unsigned int x =  ((((s.myState >> startLoc) & ((1U << 4) - 1)) ^ ((s.myState >> endLoc) & ((1U << 4) - 1))));
+    s.myState = swapBits(s.myState, startLoc, endLoc, 4);
 
 }
 
