@@ -7,10 +7,12 @@
 #include <vector>
 #include <stdint.h>
 #include <cmath>
+#include "SlideTile15.h"
 
 using namespace std;
 
- int m_dist::getManDist(uint64_t &board){
+ int m_dist::getManDist(state &a){
+     uint64_t board = a.myState;
      int returnVal = 0;
 
      for(int y = 0; y < 4; y++){

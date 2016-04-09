@@ -7,13 +7,13 @@
 #include <stdio.h>
 #include <vector>
 #include <stdint.h>
-
+#include "SlideTile15.h"
 using namespace std;
 
 
 class m_dist {
 public:
-    int getManDist(uint64_t &board);
+    int getManDist(state &board);
 
 private:
 };
