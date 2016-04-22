@@ -14,7 +14,7 @@
 
 struct STPState {
 	STPState();
-	
+
 	uint8_t values[16];
 	int blank;
 	int hcost;

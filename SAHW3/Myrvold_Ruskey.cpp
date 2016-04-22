@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <cmath>
-
+#include "SlideTileDB.h"
 using namespace std;
 uint8_t* Myrvold_Ruskey::Unrank15(const int &rank, int size){
 //  generate a starting permutation
@@ -22,7 +22,12 @@ uint8_t* Myrvold_Ruskey::Unrank15(const int &rank, int size){
 
 int Myrvold_Ruskey::Rank15(uint8_t* permutaion, int size){
     //calculate ^-1 of permutation
-    uint8_t* permutation_inverse = new uint8_t[size];
+    uint8_t* permutation_inverse = new uint8_t[16];
+
+    for(int i = 0; i < size; i++){
+        permutation_inverse[permutaion[i]] = -1;
+    }
+
     for(int i = 0; i < size; i++){
         permutation_inverse[permutaion[i]] = i;
     }

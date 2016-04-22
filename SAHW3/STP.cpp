@@ -14,7 +14,7 @@ STPState::STPState()
 	for (int x = 0; x < 16; x++)
 		values[x] = x;
 	blank = 0;
-	hcost = 0;
+	hcost = 255;
 }
 
 std::ostream &operator<<(std::ostream &out, const STPState &s)
@@ -38,6 +38,7 @@ bool operator==(const STPState &s, const STPState &t)
 			return false;
 	return true;
 }
+
 
 
 void STP::GetActions(STPState &nodeID, std::vector<slideDir> &actions)
@@ -102,33 +103,33 @@ void STP::ApplyAction(STPState &s, slideDir a)
 	switch (a)
 	{
 		case kUp:
-			s.hcost -= Distance(s.values[s.blank-4], s.blank-4);
-			s.hcost += Distance(s.values[s.blank-4], s.blank);
-			
+			//s.hcost -= Distance(s.values[s.blank-4], s.blank-4);
+			//s.hcost += Distance(s.values[s.blank-4], s.blank);
+
 			s.values[s.blank] = s.values[s.blank-4];
 			s.values[s.blank-4] = 0;
 			s.blank -= 4;
 			break;
 		case kDown:
-			s.hcost -= Distance(s.values[s.blank+4], s.blank+4);
-			s.hcost += Distance(s.values[s.blank+4], s.blank);
+			//s.hcost -= Distance(s.values[s.blank+4], s.blank+4);
+			//s.hcost += Distance(s.values[s.blank+4], s.blank);
 
 			s.values[s.blank] = s.values[s.blank+4];
 			s.values[s.blank+4] = 0;
 			s.blank += 4;
 			break;
 		case kLeft:
-			s.hcost -= Distance(s.values[s.blank-1], s.blank-1);
-			s.hcost += Distance(s.values[s.blank-1], s.blank);
-			
+			//s.hcost -= Distance(s.values[s.blank-1], s.blank-1);
+			//s.hcost += Distance(s.values[s.blank-1], s.blank);
+
 			s.values[s.blank] = s.values[s.blank-1];
 			s.values[s.blank-1] = 0;
 			s.blank -= 1;
 			break;
 		case kRight:
-			s.hcost -= Distance(s.values[s.blank+1], s.blank+1);
-			s.hcost += Distance(s.values[s.blank+1], s.blank);
-			
+			//s.hcost -= Distance(s.values[s.blank+1], s.blank+1);
+			//s.hcost += Distance(s.values[s.blank+1], s.blank);
+
 			s.values[s.blank] = s.values[s.blank+1];
 			s.values[s.blank+1] = 0;
 			s.blank += 1;
@@ -156,24 +157,23 @@ void STP::UndoAction(STPState &s, slideDir a)
 int STP::Distance(int tile, int loc)
 {
 	static int values[16][16] =
-	{
-		{0, 1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5, 3, 4, 5, 6}, // 0
-		{1, 0, 1, 2, 2, 1, 2, 3, 3, 2, 3, 4, 4, 3, 4, 5}, // 1
-		{2, 1, 0, 1, 3, 2, 1, 2, 4, 3, 2, 3, 5, 4, 3, 4}, // 2
-		{3, 2, 1, 0, 4, 3, 2, 1, 5, 4, 3, 2, 6, 5, 4, 3}, // 3
-		{1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5}, // 4
-		{2, 1, 2, 3, 1, 0, 1, 2, 2, 1, 2, 3, 3, 2, 3, 4}, // 5
-		{3, 2, 1, 2, 2, 1, 0, 1, 3, 2, 1, 2, 4, 3, 2, 3}, // 6
-		{4, 3, 2, 1, 3, 2, 1, 0, 4, 3, 2, 1, 5, 4, 3, 2}, // 7
-		{2, 3, 4, 5, 1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 3, 4}, // 8
-		{3, 2, 3, 4, 2, 1, 2, 3, 1, 0, 1, 2, 2, 1, 2, 3}, // 9
-		{4, 3, 2, 3, 3, 2, 1, 2, 2, 1, 0, 1, 3, 2, 1, 2}, // 10
-		{5, 4, 3, 2, 4, 3, 2, 1, 3, 2, 1, 0, 4, 3, 2, 1}, // 11
-		{3, 4, 5, 6, 2, 3, 4, 5, 1, 2, 3, 4, 0, 1, 2, 3}, // 12
-		{4, 3, 4, 5, 3, 2, 3, 4, 2, 1, 2, 3, 1, 0, 1, 2}, // 13
-		{5, 4, 3, 4, 4, 3, 2, 3, 3, 2, 1, 2, 2, 1, 0, 1}, // 14
-		{6, 5, 4, 3, 5, 4, 3, 2, 4, 3, 2, 1, 3, 2, 1, 0}
-	};
+			{
+					{0, 1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5, 3, 4, 5, 6}, // 0
+					{1, 0, 1, 2, 2, 1, 2, 3, 3, 2, 3, 4, 4, 3, 4, 5}, // 1
+					{2, 1, 0, 1, 3, 2, 1, 2, 4, 3, 2, 3, 5, 4, 3, 4}, // 2
+					{3, 2, 1, 0, 4, 3, 2, 1, 5, 4, 3, 2, 6, 5, 4, 3}, // 3
+					{1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5}, // 4
+					{2, 1, 2, 3, 1, 0, 1, 2, 2, 1, 2, 3, 3, 2, 3, 4}, // 5
+					{3, 2, 1, 2, 2, 1, 0, 1, 3, 2, 1, 2, 4, 3, 2, 3}, // 6
+					{4, 3, 2, 1, 3, 2, 1, 0, 4, 3, 2, 1, 5, 4, 3, 2}, // 7
+					{2, 3, 4, 5, 1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 3, 4}, // 8
+					{3, 2, 3, 4, 2, 1, 2, 3, 1, 0, 1, 2, 2, 1, 2, 3}, // 9
+					{4, 3, 2, 3, 3, 2, 1, 2, 2, 1, 0, 1, 3, 2, 1, 2}, // 10
+					{5, 4, 3, 2, 4, 3, 2, 1, 3, 2, 1, 0, 4, 3, 2, 1}, // 11
+					{3, 4, 5, 6, 2, 3, 4, 5, 1, 2, 3, 4, 0, 1, 2, 3}, // 12
+					{4, 3, 4, 5, 3, 2, 3, 4, 2, 1, 2, 3, 1, 0, 1, 2}, // 13
+					{5, 4, 3, 4, 4, 3, 2, 3, 3, 2, 1, 2, 2, 1, 0, 1}, // 14
+					{6, 5, 4, 3, 5, 4, 3, 2, 4, 3, 2, 1, 3, 2, 1, 0}
+			};
 	return values[tile][loc];
 }
-
