@@ -22,7 +22,6 @@ void split(const string& s, char c, vector<string>& v) {
 
 char BitMap::GetCell(int x, int y)
 {
-    std::cout << "encoded " << EncodeMapPosition(y, x) << std::endl;
     return myMap[EncodeMapPosition(y, x)];
 }
 

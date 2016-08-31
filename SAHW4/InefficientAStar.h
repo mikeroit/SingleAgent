@@ -1,5 +1,6 @@
 // InefficientAStar.h
 
+#include <iostream>
 #include <vector>
 
 
@@ -15,12 +16,13 @@ class Node
         int GetFCost();
         void SetHCost(int h);
         void SetGCost(int g);
+        State myState;
 
     private:
-        State myState;
         int myHCost; 
         int myGCost;
 };
+
 template <typename State>
 Node<State>::Node()
 {
@@ -30,7 +32,7 @@ Node<State>::Node()
 template <typename State>
 Node<State>::Node(State &s)
 {
-    myState = new State(s.xLoc, s.yLoc);
+    myState = State(s.xLoc, s.yLoc);
 }
 
 template <typename State>
@@ -49,7 +51,6 @@ template <typename State>
 void Node<State>::SetGCost(int g){myGCost = g; }
 
 // ------------------------------------------------------
-//
 
 template <typename State, typename Action, typename Environment>
 class InefficientAStar
@@ -62,20 +63,35 @@ class InefficientAStar
     private:
         Environment myEnvironment;
 
-        std::vector<State> myOpenList;
-        std::vector<State> myClosedList;
+        std::vector<Node<State> > myOpenList;
+        std::vector<Node<State> > myClosedList;
 
         int myNodesExpanded;
 
-        static int FindBestNextNodeIndex(std::vector<State> &v)
+        static int FindBestNextNodeIndex(std::vector<Node<State> > &v)
         {
-            int res = (v[0].GetFCost());
+            int best = (v[0].GetFCost());
+            int res = 0;
 
             for(int i = 0; i < v.size(); i++)
             {
-                if ((v[i].GetFCost()) < (v[res].GetFCost())){res = i;}
+                if ((v[i].GetFCost()) < (v[res].GetFCost())){res = i; best = v[i].GetFCost();}
             }
             return res;
+        }
+
+        static bool ListContains(Node<State> node, std::vector<Node<State> > &v)
+        {
+            for(int i = 0; i < v.size(); i++)
+            {
+                if(v[i].myState.xLoc == node.myState.xLoc &&
+                        v[i].myState.yLoc == node.myState.yLoc)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 };
 
@@ -90,25 +106,62 @@ InefficientAStar<State, Action, Environment>
 template <typename State, typename Action, typename Environment>
 void InefficientAStar<State, Action, Environment>::Search(State start, State goal)
 {
-    std::vector<Action> actions = new std::vector<Action>();
+    std::vector<Action> actions;
 
     //init lists
-    myOpenList = new std::vector<Node>();
-    myClosedList = new std::vector<Node>();
     myNodesExpanded = 0;
 
     // push start 
     myOpenList.push_back(start);
 
-    while(true)
+    bool loopBreak = false;
+    int gCost = 0;
+    while(!loopBreak)
     {
-        actions.clear();
         // expand best node
-        int bestNode = FindBestNextIndex(myOpenList);
-        myEnvironment->GetActions(myOpenList[bestNode], actions);
+        Node<State> bestNode = myOpenList[FindBestNextNodeIndex(myOpenList)];
+        myClosedList.push_back(Node<State>(bestNode));
+        myOpenList.erase(myOpenList.begin() + FindBestNextNodeIndex(myOpenList));
+        myEnvironment.GetActions(bestNode.myState, actions);
 
-        for(int i = 0; i < )
+        for(int i = 0; i < actions.size(); i++ )
+        {
+            myEnvironment.ApplyAction(bestNode.myState, actions[i]);
 
+            if(bestNode.myState.xLoc == goal.xLoc && bestNode.myState.yLoc == goal.yLoc)
+            {
+                loopBreak = true;
+            }
+
+            bestNode.SetGCost(gCost);
+            bestNode.SetHCost(myEnvironment.GenerateHeuristic(bestNode.myState, goal));
+
+            if(! (ListContains(bestNode, myClosedList) || ListContains(bestNode, myOpenList)))
+            {
+                myOpenList.push_back(Node<State>(bestNode));
+                std::cout << bestNode.myState.xLoc << ", " << bestNode.myState.yLoc << std::endl;
+                myNodesExpanded++;
+            }
+            myEnvironment.UndoAction(bestNode.myState, actions[i]);
+        }
+
+        gCost++;
 
     }
+
+    std::cout << "Found Solution in " << myNodesExpanded << " expansions" << std::endl;
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

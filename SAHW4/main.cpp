@@ -86,9 +86,20 @@ bool TestApplyAction()
     std::cout << s.xLoc << ", " << s.yLoc << std::endl;
 }
 
+bool TestSearch()
+{
+    InefficientAStar<State, Action, OctileMap>* searchAlg;
+
+    searchAlg = new InefficientAStar<State, Action, OctileMap>(OctileMap("./res/arena.map"));
+
+    searchAlg->Search(State(3, 1), State(10, 10));
+
+    return true;
+}
+
 int main()
 {
-    if(TestApplyAction())
+    if(TestSearch())
     {
         std::cout<< "Passed" << std::endl;
     }

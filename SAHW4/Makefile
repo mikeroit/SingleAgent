@@ -1,6 +1,4 @@
 CC=g++ 
-CFLAGS=-Wall
-main: main.o 
 
-clean:
-		rm -f main main.o 
+main:
+	g++ main.cpp BitMap.h BitMap.cpp OctileMap.h OctileMap.cpp InefficientAStar.h InefficientAStar.cpp
