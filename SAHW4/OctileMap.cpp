@@ -2,15 +2,15 @@
 
 #include <iostream>
 #include <math.h>
+#include <cmath>
 #include "OctileMap.h"
 
 
 void OctileMap::GetActions(State &s, vector<Action> &a)
 {
     //Check all 8 possible moves
-    
 
-    // north -> current location y value must be greater than zero
+    // north-> current location y value must be greater than zero
     //      northwest -> xLoc greater than zero
     //      northeast -> xLoc less than width
     if(s.yLoc > 0 && (myArenaMap->GetCell(s.xLoc, s.yLoc-1) == '.'))
@@ -80,6 +80,9 @@ void OctileMap::UndoAction(State &s, Action &a)
 int OctileMap::GenerateHeuristic(State &s, State &g)
 {
     return 
-        ( sqrt((s.xLoc * s.xLoc) + (s.yLoc * s.yLoc)) );
+        ( sqrt(
+               (abs(g.xLoc - s.xLoc) * abs(g.xLoc - s.xLoc)) + 
+               (abs(g.yLoc - s.yLoc) * abs(g.yLoc - s.yLoc)) 
+               ));
 
 }

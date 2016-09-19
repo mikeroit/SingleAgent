@@ -27,7 +27,7 @@ char BitMap::GetCell(int x, int y)
 
 void BitMap::ReadFromFile(std::string fileName)
 {
-    std::ifstream file("./res/arena.map");
+    std::ifstream file("./res/den401d.map");
     std::string line; 
 
     int loopIndex = 0;
@@ -66,8 +66,8 @@ void BitMap::ReadFromFile(std::string fileName)
         loopIndex++;
     }
 
-    std::cout << "h:" << myHeight << std::endl;
-    std::cout << "w:" << myWidth << std::endl;
+    //std::cout << "h:" << myHeight << std::endl;
+    //std::cout << "w:" << myWidth << std::endl;
 }
 
 void BitMap::DecodeMapIndex(int index, Point &p)
@@ -92,6 +92,20 @@ int BitMap::EncodeMapPosition(Point p)
         (p.yLoc * myWidth) + p.xLoc;
 }
 
+void BitMap::PrintMap()
+{
+    for(int i = 0; i < myWidth; i++)
+    {
+        for(int j = 0; j < myHeight; j++)
+        {
+            std::cout << GetCell(i, j);
+        }
+
+        std::cout << std::endl;
+
+    }
+}
+
 // getters and setters
 
 void BitMap::SetWidth(int w)
@@ -113,3 +127,5 @@ int BitMap::GetWidth()
 {
     return myWidth;
 }
+
+

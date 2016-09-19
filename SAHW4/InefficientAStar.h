@@ -33,6 +33,8 @@ template <typename State>
 Node<State>::Node(State &s)
 {
     myState = State(s.xLoc, s.yLoc);
+    myGCost = 0;
+        
 }
 
 template <typename State>
@@ -120,9 +122,16 @@ void InefficientAStar<State, Action, Environment>::Search(State start, State goa
     {
         // expand best node
         Node<State> bestNode = myOpenList[FindBestNextNodeIndex(myOpenList)];
+        std::cout << "(" << bestNode.myState.xLoc << ", " << bestNode.myState.yLoc << ") " 
+            << bestNode.GetGCost() << ", " << bestNode.GetHCost() << ", " << bestNode.GetFCost() << std::endl;
+
+        // add best node to closed list
         myClosedList.push_back(Node<State>(bestNode));
         myOpenList.erase(myOpenList.begin() + FindBestNextNodeIndex(myOpenList));
+
+        // expand
         myEnvironment.GetActions(bestNode.myState, actions);
+        int gCostToSet = bestNode.GetGCost() + 1;
 
         for(int i = 0; i < actions.size(); i++ )
         {
@@ -133,18 +142,17 @@ void InefficientAStar<State, Action, Environment>::Search(State start, State goa
                 loopBreak = true;
             }
 
-            bestNode.SetGCost(gCost);
+            bestNode.SetGCost(gCostToSet);
             bestNode.SetHCost(myEnvironment.GenerateHeuristic(bestNode.myState, goal));
 
             if(! (ListContains(bestNode, myClosedList) || ListContains(bestNode, myOpenList)))
             {
                 myOpenList.push_back(Node<State>(bestNode));
-                std::cout << bestNode.myState.xLoc << ", " << bestNode.myState.yLoc << std::endl;
-                myNodesExpanded++;
             }
             myEnvironment.UndoAction(bestNode.myState, actions[i]);
         }
 
+        myNodesExpanded++;
         gCost++;
 
     }

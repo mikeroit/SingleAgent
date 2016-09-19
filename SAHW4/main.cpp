@@ -90,9 +90,9 @@ bool TestSearch()
 {
     InefficientAStar<State, Action, OctileMap>* searchAlg;
 
-    searchAlg = new InefficientAStar<State, Action, OctileMap>(OctileMap("./res/arena.map"));
+    searchAlg = new InefficientAStar<State, Action, OctileMap>(OctileMap("./res/den401d.map"));
 
-    searchAlg->Search(State(3, 1), State(10, 10));
+    searchAlg->Search(State(7, 7), State(60, 50));
 
     return true;
 }

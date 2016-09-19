@@ -43,6 +43,7 @@ class OctileMap
         void ApplyAction(State &s, Action &a);
         void UndoAction(State &s, Action &a);
         int GenerateHeuristic(State &s, State &g);
+        void PrintMap(){myArenaMap->PrintMap();}
 
     private:
         BitMap *myArenaMap;

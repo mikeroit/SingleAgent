@@ -26,6 +26,7 @@ class BitMap
         void DecodeMapIndex(int index, Point &p);
         int EncodeMapPosition(Point p);
         int EncodeMapPosition(int x, int y);
+        void PrintMap();
         void SetWidth(int w);
         void SetHeight(int h);
         int GetHeight();
