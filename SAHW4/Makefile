@@ -1,2 +1,11 @@
-main:
-	g++ main.cpp BitMap.h BitMap.cpp OctileMap.h OctileMap.cpp InefficientAStar.h 
+
+all:
+	g++ main.cpp OctileMap.h OctileMap.cpp BitMap.cpp BitMap.h InefficientAStar.h 
+
+
+clean:
+	rm a.out OctileMap.h.gch InefficientAStar.h.gch BitMap.h.gch
+
+
+  
+

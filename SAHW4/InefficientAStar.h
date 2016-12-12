@@ -65,8 +65,8 @@ class InefficientAStar
     private:
         Environment myEnvironment;
 
-        std::vector<Node<State> > myOpenList;
-        std::vector<Node<State> > myClosedList;
+        std::vector< Node<State> > myOpenList;
+        std::vector< Node<State> > myClosedList;
 
         int myNodesExpanded;
 
@@ -122,8 +122,6 @@ void InefficientAStar<State, Action, Environment>::Search(State start, State goa
     {
         // expand best node
         Node<State> bestNode = myOpenList[FindBestNextNodeIndex(myOpenList)];
-        std::cout << "(" << bestNode.myState.xLoc << ", " << bestNode.myState.yLoc << ") " 
-            << bestNode.GetGCost() << ", " << bestNode.GetHCost() << ", " << bestNode.GetFCost() << std::endl;
 
         // add best node to closed list
         myClosedList.push_back(Node<State>(bestNode));

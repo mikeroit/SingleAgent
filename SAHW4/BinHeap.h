@@ -1,85 +1,147 @@
-//Binary heap for open list
-//Note: code for this class was modeled, but not copied, from:
-// http://www.codeproject.com/Tips/816934/Min-Binary-Heap-Implementation-in-Cplusplus
+//Binary heap used for the Open/Closed lists in A*
+#include "Node.h"
+#include <iostream>
+
+//static class functions
+//Get Left Child
+static int GetLeftChildIndex(int index)
+{
+    return index * 2;
+}
+
+//Get Right Child
+static int GetRightChildIndex(int index)
+{
+    return (index * 2) + 1;
+}
+
+// Get Parent
+static int GetParentIndex(int index)
+{
+    return index/2;
+}
 
 
-#include <vector>
-
-template <typename T>
+//class header
+template <typename State>
 class BinHeap
 {
     public:
-        BinHeap();
-        void Push(T newT);
-        T Pop();
+
+        //constructor
+        BinHeap(Node<State>* firstVal); 
+        void Push(Node<State> value);
+        Node<State> Pop();
 
     private:
-        std::vector<T> myHeap;
+        std::vector<Node<State>>* myArray; //holds values
+        int myNumElements; //stores size of data structure
 
-        void SiftUp(int index);
-        void SiftDown(int index);
-        void Reheapify();
+        //private helper functions
+        void swap(int a, int b);
+        int sift_up(int start);
+        void sift_down(int start);
 };
 
-BinHeap::BinHeap()
+// constructor
+template <typename State>
+BinHeap<State>::BinHeap(Node<State>* firstVal)
 {
+    //allocate vec
+    myArray = new  std::vector<Node<State>>();
 
-}
+    //clear vec
+    myArray->clear();
 
-void BinHeap::Reheapify()
-{
-    for(int i = myHeap.size() - 1; i >= 0; i--)
-    {
-        SiftDown(i);
-    }
-}
+    //add first val
+    myArray->push_back(*firstVal);
+    myNumElements = 1;
 
-void BinHeap::SiftDown(int index)
-{
-    int l = myHeapp.size();
-    int left = (2*index) + 1;
-    int right = (2*index + 2);
-
-    if(left >= l) //leaf 
-    {
-        return;
-    }
-
-    int minIndex = index;
-    if(myHeap[index] > myHeap[left])
-    {
-        minIndex = left;
-    }
-
-    if(right < l && myHeap[minIndex] > myHeap[right])
-    {
-        minIndex = right;
-    }
-
-    if(minINdex != index)
-    {
-        T temp = myHeap[index];
-        myHeap[index] = myHeap[minIndex];
-        myHeap[minIndex] = temp;
-        SiftDown(minIndex);
-    }
+    std::cout << myArray->size() << std::endl;
 }
 
 
 
+// private swap
+template <typename State>
+void BinHeap<State>::swap(int a, int b)
+{
+    Node<State> temp = myArray[a]; //store value at a
 
+    myArray[a] = myArray[b]; //overwrite value at a
 
+    myArray[b] = temp;
+}
 
+//private sift up
+template <typename State>
+int BinHeap<State>::sift_up(int start)
+{
+    int currentIndex = start; 
 
+    while(myArray[currentIndex].GetFCost() < myArray[GetParentIndex(currentIndex)])
+    {
+        swap(currentIndex, GetParentIndex(currentIndex));
+        currentIndex = GetParentIndex(currentIndex);
+    }
+    return currentIndex;
+}
 
+//private sift down
+template <typename State>
+void BinHeap<State>::sift_down(int start)
+{
+    bool sifted = false;
+    int currentIndex = start;
 
+    while(! sifted)
+    {
+        int leftVal = 0xFFFFFFFF;
+        int rightVal = 0xFFFFFFFF;
 
+        bool hasLeftChild = (GetLeftChildIndex(currentIndex) < myNumElements);
+        bool hasRightChild = (GetRightChildIndex(currentIndex) < myNumElements);
+        if((!hasRightChild) && (!hasLeftChild)) break; 
 
+        if(hasLeftChild) leftVal = myArray[GetLeftChildIndex(currentIndex)];
+        if(hasRightChild) rightVal = myArray[GetRightChildIndex(currentIndex)];
 
+        
+        //are we sifted?
+        if((myArray[currentIndex] <= rightVal) &&
+            (myArray[currentIndex] <= leftVal))
+        {
+            sifted = true;
+        }
 
+        //do we need to swap with left child?
+        else if(hasLeftChild && (myArray[currentIndex] > myArray[GetLeftChildIndex(currentIndex)]))
+        {
+            swap(currentIndex, GetLeftChildIndex(currentIndex));
+            currentIndex = GetLeftChildIndex(currentIndex);
+        }
 
+        //must need to swap with right child
+        else if(hasRightChild)
+        {
+            swap(currentIndex, GetRightChildIndex(currentIndex));
+            currentIndex = GetRightChildIndex(currentIndex);
+        }
+    }
+}
 
+template <typename State>
+void BinHeap<State>::Push(Node<State> value)
+{
+    myArray->push_back(value);
+    myNumElements++;
 
+    int indexSiftedUp = sift_up(myNumElements - 1);
+    sift_down(indexSiftedUp);
+}
 
-
-
+template <typename State>
+Node<State> BinHeap<State>::Pop()
+{
+    return Node<State>();
+}

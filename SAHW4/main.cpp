@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <iostream>
 #include "OctileMap.h"
-#include "InefficientAStar.h"
+//#include "InefficientAStar.h"
+#include "BinHeap.h"
+//#include "Node.h"
 
 using namespace std;
 
@@ -88,18 +90,26 @@ bool TestApplyAction()
 
 bool TestSearch()
 {
-    InefficientAStar<State, Action, OctileMap>* searchAlg;
+    //InefficientAStar<State, Action, OctileMap>* searchAlg;
 
-    searchAlg = new InefficientAStar<State, Action, OctileMap>(OctileMap("./res/den401d.map"));
+    //searchAlg = new InefficientAStar<State, Action, OctileMap>(OctileMap("./res/den401d.map"));
 
-    searchAlg->Search(State(7, 7), State(60, 50));
+    //searchAlg->Search(State(7, 7), State(60, 50));
 
     return true;
 }
 
+bool TestBinHeapConstructor()
+{
+	Node<State>* myNode = new Node<State>();
+	BinHeap<State>* myHeap = new BinHeap<State>(myNode);
+
+	return true;
+}
+
 int main()
 {
-    if(TestSearch())
+    if(TestBinHeapConstructor())
     {
         std::cout<< "Passed" << std::endl;
     }
