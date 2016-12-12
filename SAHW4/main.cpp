@@ -107,9 +107,44 @@ bool TestBinHeapConstructor()
 	return true;
 }
 
+bool TestHeapOps()
+{
+	//Allocate room for 10 nodes
+	Node<State>* myNodes = new Node<State>[10];
+	
+	//Make 10 states
+	State* myStates = new State[10];
+
+	//Make 10 nodes
+	for(int i = 0; i < 10; i++)
+	{
+		myStates[i] = State();
+		myNodes[i] = Node<State>(myStates[i]);
+		myNodes[i].SetGCost(10 - i);
+		myNodes[i].SetHCost(10 - i);
+	}
+
+	//make a heap
+	BinHeap<State> myHeap = BinHeap<State>(&myNodes[0]);
+
+	for(int i = 1; i < 10; i++)
+	{
+		myHeap.Push(myNodes[i]);
+	}
+
+
+	for(int i = 1; i < 9; i++)
+	{
+		Node<State>& res = myHeap.Pop();
+		std::cout << res.GetFCost() << std::endl;
+	}
+
+	return true;
+}
+
 int main()
 {
-    if(TestBinHeapConstructor())
+    if(TestHeapOps())
     {
         std::cout<< "Passed" << std::endl;
     }

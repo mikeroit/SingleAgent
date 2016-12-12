@@ -31,7 +31,7 @@ class BinHeap
         //constructor
         BinHeap(Node<State>* firstVal); 
         void Push(Node<State> value);
-        Node<State> Pop();
+        Node<State>& Pop();
 
     private:
         std::vector<Node<State>>* myArray; //holds values
@@ -66,11 +66,11 @@ BinHeap<State>::BinHeap(Node<State>* firstVal)
 template <typename State>
 void BinHeap<State>::swap(int a, int b)
 {
-    Node<State> temp = myArray[a]; //store value at a
+    Node<State> temp = myArray->at(a); //store value at a
 
-    myArray[a] = myArray[b]; //overwrite value at a
+    myArray->at(a) = myArray->at(b); //overwrite value at a
 
-    myArray[b] = temp;
+    myArray->at(b) = temp;
 }
 
 //private sift up
@@ -79,7 +79,7 @@ int BinHeap<State>::sift_up(int start)
 {
     int currentIndex = start; 
 
-    while(myArray[currentIndex].GetFCost() < myArray[GetParentIndex(currentIndex)])
+    while(myArray->at(currentIndex).GetFCost() < myArray->at(GetParentIndex(currentIndex)).GetFCost())
     {
         swap(currentIndex, GetParentIndex(currentIndex));
         currentIndex = GetParentIndex(currentIndex);
@@ -103,19 +103,19 @@ void BinHeap<State>::sift_down(int start)
         bool hasRightChild = (GetRightChildIndex(currentIndex) < myNumElements);
         if((!hasRightChild) && (!hasLeftChild)) break; 
 
-        if(hasLeftChild) leftVal = myArray[GetLeftChildIndex(currentIndex)];
-        if(hasRightChild) rightVal = myArray[GetRightChildIndex(currentIndex)];
+        if(hasLeftChild) leftVal = myArray->at(GetLeftChildIndex(currentIndex)).GetFCost();
+        if(hasRightChild) rightVal = myArray->at(GetRightChildIndex(currentIndex)).GetFCost();
 
         
         //are we sifted?
-        if((myArray[currentIndex] <= rightVal) &&
-            (myArray[currentIndex] <= leftVal))
+        if((myArray->at(currentIndex).GetFCost() <= rightVal) &&
+            (myArray->at(currentIndex).GetFCost() <= leftVal))
         {
             sifted = true;
         }
 
         //do we need to swap with left child?
-        else if(hasLeftChild && (myArray[currentIndex] > myArray[GetLeftChildIndex(currentIndex)]))
+        else if(hasLeftChild && (myArray->at(currentIndex).GetFCost() > myArray->at(GetLeftChildIndex(currentIndex)).GetFCost()))
         {
             swap(currentIndex, GetLeftChildIndex(currentIndex));
             currentIndex = GetLeftChildIndex(currentIndex);
@@ -130,6 +130,7 @@ void BinHeap<State>::sift_down(int start)
     }
 }
 
+// BinHeap Push
 template <typename State>
 void BinHeap<State>::Push(Node<State> value)
 {
@@ -140,8 +141,39 @@ void BinHeap<State>::Push(Node<State> value)
     sift_down(indexSiftedUp);
 }
 
+// BinHeap Pop
 template <typename State>
-Node<State> BinHeap<State>::Pop()
+Node<State>& BinHeap<State>::Pop()
 {
-    return Node<State>();
+	//get return value
+	Node<State>* result = new Node<State>(myArray->front().myState);
+
+	//replace root with last leaf
+	myArray[0] = myArray[myNumElements - 1];
+	myArray->pop_back();
+
+	//reheapify
+	sift_down(0);
+
+    return *result;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
